@@ -5,6 +5,12 @@ class Exercise(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    INTENSITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    intensity = models.CharField(max_length=10, choices=INTENSITY_CHOICES, default='medium')
 
     def __str__(self):
         return self.name

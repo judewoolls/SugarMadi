@@ -1,6 +1,16 @@
 from django import forms
 from .models import BloodSugarReading, Entry, Exercise
 
+class ExerciseForm(forms.ModelForm):
+    class Meta:
+        model = Exercise
+        fields = ['name', 'description', 'intensity']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Exercise Name'}),
+            'description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Description (optional)'}),
+            'intensity': forms.Select(choices=Exercise.INTENSITY_CHOICES, attrs={'class': 'form-select'})
+        }
+
 class BloodSugarReadingForm(forms.ModelForm):
     class Meta:
         model = BloodSugarReading
