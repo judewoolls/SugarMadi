@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+
+# Django Stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.mo
+*.db
+db.sqlite3
+media/
+staticfiles/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Environment variables
+.env
+
+# MacOS
+.DS_Store
+
+# Byte-compiled
+*.egg
+*.egg-info
+dist
+build
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
