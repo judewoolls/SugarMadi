@@ -24,4 +24,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', lambda request: redirect('account_signup') if not request.user.is_authenticated else redirect('dashboard')),
     path('dashboard/', tracker_views.dashboard, name='dashboard'),
+    path('tracker/', include('tracker.urls')),
+
 ]
