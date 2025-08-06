@@ -4,30 +4,31 @@
 
 {% block content %}
 <main class="d-flex flex-column align-items-center">
-    <h1>Manage Exercises</h1>
+    <h1 class="mt-3">Manage Exercises</h1>
     <p>Here you can manage your exercise entries.</p>
-    <table class="table" style="width: 90%;">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Intensity</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for exercise in exercises %}
-            <tr>
-                <th scope="row">{{ exercise.id }}</th>
-                <td>{{ exercise.name }}</td>
-                <td>{{ exercise.description }}</td>
-                <td>{{ exercise.intensity }}</td>
-                <td><a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-primary">Edit</a></td>
-            </tr>   
-            {% endfor %}
-        </tbody>
-    </table>
     <a href="{% url 'create_exercise' %}" class="btn btn-success">Create New Exercise</a>
+    
+    {% if exercises %}
+        <p class="mt-3">You have {{ exercises|length }} exercise entries.</p>
+    {% else %}
+        <p class="mt-3">No exercise entries found. Please create one.</p>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            {% for exercise in exercises %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ exercise.name }}</h5>
+                            <p class="card-text">{{ exercise.description }}</p>
+                            <p class="card-text">Intensity: {{ exercise.intensity }}</p>
+                            <a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </main>
 {% endblock %}

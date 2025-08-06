@@ -14,7 +14,6 @@ def dashboard(request):
 def manage_exercises(request):
     user = request.user
     exercises = Exercise.objects.filter(user=user)
-    print(f"User: {user.email}, Exercises: {exercises.count()}")
     return render(request, 'tracker/manage_exercises.html', {'exercises': exercises})
 
 @login_required
@@ -55,3 +54,13 @@ def edit_exercise(request, exercise_id):
         form = ExerciseForm(instance=exercise)
 
     return render(request, 'tracker/edit_exercise.html', {'form': form, 'exercise': exercise})
+
+@login_required
+def delete_exercise(request, exercise_id):
+    try:
+        exercise = Exercise.objects.get(id=exercise_id, user=request.user)
+        exercise.delete()
+        messages.success(request, 'Exercise deleted successfully!')
+    except Exercise.DoesNotExist:
+        messages.error(request, 'Exercise not found.')
+    return redirect('manage_exercises')
