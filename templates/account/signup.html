@@ -16,6 +16,7 @@
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        height: 110vh;
     }
     h1 {
         text-align: center;
@@ -53,7 +54,7 @@
         border: 1px solid #ced4da;
     }
 </style>
-<main class="d-flex justify-content-center align-items-center flex-column">
+<main class="d-flex justify-content-center align-items-center flex-column mb-4" style="margin-bottom: 50px;">
     <h1 class="mt-4">Create Your Account</h1>
     <form method="post" class="mt-3 w-50">
         {% csrf_token %}
@@ -70,7 +71,7 @@
         {% endfor %}
         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
     </form>
-    <p class="mt-2">
+    <p class="mt-2 mb-4">
         Already have an account? <a href="{% url 'account_login' %}">Login</a>
     </p>
 </main>
