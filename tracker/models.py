@@ -46,12 +46,12 @@ class Entry(models.Model):
     notes = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    sugar_grams = models.DecimalField(
+    carbohydrate_grams = models.DecimalField(
         max_digits=6, 
         decimal_places=2,
         null=True,     # allow null if user doesn't provide
         blank=True,    # allow form to be submitted without this
-        help_text="Amount of sugar consumed (grams) during this exercise session",
+        help_text="Amount of Carbohydrates consumed (grams) during this exercise session",
         default=0.00
     )
 
@@ -83,14 +83,14 @@ class Snack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    sugar_content = models.DecimalField(
+    carbohydrate_grams = models.DecimalField(
         max_digits=6,
         decimal_places=2,
-        help_text="Sugar content in grams",
+        help_text="Carbohydrate content in grams",
         default=0.00
     )
     serving_size = models.CharField(max_length=50, blank=True, help_text="Serving size (optional)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.sugar_content}g sugar"
+        return f"{self.name} - {self.carbohydrate_grams}g Carbs Serving: ({self.serving_size})"

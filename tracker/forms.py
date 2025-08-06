@@ -41,14 +41,14 @@ class BloodSugarReadingForm(forms.ModelForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['exercise', 'duration_minutes', 'notes', 'before_reading', 'after_reading', 'sugar_grams']
+        fields = ['exercise', 'duration_minutes', 'notes', 'before_reading', 'after_reading', 'carbohydrate_grams']
         labels = {
             'exercise': 'Exercise',
             'duration_minutes': 'Duration (minutes)',
             'notes': 'Notes (optional)',
             'before_reading': 'Before Reading',
             'after_reading': 'After Reading',
-            'sugar_grams': 'Sugar Consumed (grams, optional)'
+            'carbohydrate_grams': 'Carbohydrates Consumed (grams, optional)'
         }
         widgets = {
             'notes': forms.Textarea(attrs={'rows': 3}),
@@ -63,11 +63,11 @@ class EntryForm(forms.ModelForm):
 class CompleteEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['before_reading', 'after_reading', 'sugar_grams', 'duration_minutes', 'notes']
+        fields = ['before_reading', 'after_reading', 'carbohydrate_grams', 'duration_minutes', 'notes']
         labels = {
             'before_reading': 'Before Reading',
             'after_reading': 'After Reading',
-            'sugar_grams': 'Sugar Consumed (grams, optional)',
+            'carbohydrate_grams': 'Carbohydrates Consumed (grams, optional)',
             'duration_minutes': 'Duration (minutes)',
             'notes': 'Notes (optional)'
         }
@@ -80,16 +80,16 @@ class CompleteEntryForm(forms.ModelForm):
 class SnackForm(forms.ModelForm):
     class Meta:
         model = Snack
-        fields = ['name', 'sugar_content', 'serving_size','user', 'description']
+        fields = ['name', 'carbohydrate_grams', 'serving_size','user', 'description']
         labels = {
             'name': 'Snack Name',
-            'sugar_content': 'Sugar Content (grams)',
+            'carbohydrate_grams': 'Carbohydrate Content (grams)',
             'description': 'Description (optional)',
             'serving_size': 'Serving Size Grams (optional)',
             'user': ''
         }
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Snack Name'}),
-            'sugar_content': forms.NumberInput(attrs={'placeholder': 'Sugar Content (grams)', 'step': '0.1'}),
+            'carbohydrate_grams': forms.NumberInput(attrs={'placeholder': 'Carbohydrate Content (grams)', 'step': '0.1'}),
             'user': forms.HiddenInput()  # Automatically set to the logged-in user
         }
