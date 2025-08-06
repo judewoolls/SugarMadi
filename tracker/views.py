@@ -1,7 +1,7 @@
 # tracker/views.py
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from .forms import ExerciseForm, BloodSugarReadingForm
+from .forms import ExerciseForm, BloodSugarReadingForm, EntryForm, CompleteEntryForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Exercise, BloodSugarReading, Entry
@@ -87,3 +87,19 @@ def manage_blood_sugar_readings(request):
     user = request.user
     readings = BloodSugarReading.objects.filter(user=user).order_by('-timestamp')
     return render(request, 'tracker/manage_blood_sugar_readings.html', {'readings': readings})
+
+@login_required
+def create_entry(request):
+    if request.method == 'POST':
+        form = EntryForm(request.POST)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.user = request.user
+            entry.save()
+            messages.success(request, 'Entry created successfully!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = EntryForm()
+    return render(request, 'tracker/create_entry.html', {'form': form})
