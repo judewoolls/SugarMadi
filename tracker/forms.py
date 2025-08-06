@@ -4,12 +4,26 @@ from .models import BloodSugarReading, Entry, Exercise
 class ExerciseForm(forms.ModelForm):
     class Meta:
         model = Exercise
-        fields = ['name', 'description', 'intensity']
+        fields = ['name', 'description', 'intensity', 'user']
+        labels = {
+            'name': 'Exercise Name',
+            'description': 'Description (optional)',
+            'intensity': 'Intensity Level',
+            'user': ''
+        }
+        help_texts = {
+            'name': 'Enter the name of the exercise.',
+            'description': 'Optional description of the exercise.',
+            'intensity': 'Select the intensity level of the exercise.',
+            'user': 'This field is automatically set to the logged-in user.'
+        }
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Exercise Name'}),
             'description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Description (optional)'}),
-            'intensity': forms.Select(choices=Exercise.INTENSITY_CHOICES, attrs={'class': 'form-select'})
+            'intensity': forms.Select(choices=Exercise.INTENSITY_CHOICES, attrs={'class': 'form-select'}),
+            'user': forms.HiddenInput()  # Automatically set to the logged-in user
         }
+
 
 class BloodSugarReadingForm(forms.ModelForm):
     class Meta:

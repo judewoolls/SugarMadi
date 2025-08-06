@@ -5,6 +5,7 @@ class Exercise(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     INTENSITY_CHOICES = [
         ('low', 'Low'),
         ('medium', 'Medium'),
@@ -13,7 +14,7 @@ class Exercise(models.Model):
     intensity = models.CharField(max_length=10, choices=INTENSITY_CHOICES, default='medium')
 
     def __str__(self):
-        return self.name
+        return self.name 
 
 class BloodSugarReading(models.Model):
     BEFORE = 'before'

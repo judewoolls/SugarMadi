@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="d-flex flex-column align-items-center">
+    <h1>Manage Exercises</h1>
+    <p>Here you can manage your exercise entries.</p>
+    <table class="table" style="width: 90%;">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Intensity</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exercise in exercises %}
+            <tr>
+                <th scope="row">{{ exercise.id }}</th>
+                <td>{{ exercise.name }}</td>
+                <td>{{ exercise.description }}</td>
+                <td>{{ exercise.intensity }}</td>
+                <td><a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-primary">Edit</a></td>
+            </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create_exercise' %}" class="btn btn-success">Create New Exercise</a>
+</main>
+{% endblock %}
