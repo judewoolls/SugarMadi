@@ -22,6 +22,15 @@
                             <h5 class="card-title">{{ exercise.name }}</h5>
                             <p class="card-text">{{ exercise.description }}</p>
                             <p class="card-text">Intensity: {{ exercise.intensity }}</p>
+                            <p class="card-text">
+                                Average Blood Sugar Change: 
+                                {% if exercise.average_change %}
+                                    {{ exercise.average_change }} mmol/L
+                                {% else %}
+                                    No data available
+                                {% endif %}
+                            </p>
+                            
                             <a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-primary">Edit</a>
                             <a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-danger">Delete</a>
                         </div>

@@ -19,9 +19,35 @@ def dashboard(request):
     return render(request, 'tracker/dashboard.html', {'entry': entry})
 
 @login_required
+def calc_average_blood_sugar_change(request, exercise_id):
+    try:
+        exercise = Exercise.objects.get(id=exercise_id, user=request.user)
+    except Exercise.DoesNotExist:
+        messages.error(request, 'Exercise not found.')
+        return redirect('manage_exercises')
+    user = request.user
+    entries = Entry.objects.filter(user=user, completed=True, exercise=exercise).order_by('-created_at')
+    if not entries:
+        messages.error(request, 'No completed entries found for this exercise.')
+        return redirect('manage_exercises')
+    total_change = 0
+    count = 0
+
+    for entry in entries:
+        if entry.before_reading and entry.after_reading:
+            change = entry.blood_sugar_diff()
+            if change is not None:
+                total_change += change
+                count += 1
+    return total_change / count if count > 0 else 0
+
+
+@login_required
 def manage_exercises(request):
     user = request.user
     exercises = Exercise.objects.filter(user=user)
+    for exercise in exercises:
+        exercise.average_change = calc_average_blood_sugar_change(request, exercise.id)
     return render(request, 'tracker/manage_exercises.html', {'exercises': exercises})
 
 @login_required
@@ -99,6 +125,7 @@ def manage_blood_sugar_readings(request):
 def view_entries(request):
     user = request.user
     entries = Entry.objects.filter(user=user).order_by('-created_at')
+    
     return render(request, 'tracker/view_entries.html', {'entries': entries})
 
 @login_required
@@ -139,3 +166,15 @@ def complete_entry(request, entry_id):
         form = CompleteEntryForm(instance=entry)
 
     return render(request, 'tracker/complete_entry.html', {'form': form, 'entry': entry})
+
+
+@login_required
+def delete_entry(request, entry_id):
+    try:
+        entry = Entry.objects.get(id=entry_id, user=request.user)
+        entry.delete()
+        messages.success(request, 'Entry deleted successfully!')
+    except Entry.DoesNotExist:
+        messages.error(request, 'Entry not found.')
+    return redirect('view_entries')
+

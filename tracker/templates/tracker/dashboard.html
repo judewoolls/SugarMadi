@@ -9,6 +9,8 @@
     <p>This is where you’ll track activities and blood sugar.</p>
     <p><a href="{% url 'manage_exercises' %}">Manage Exercises</a></p>
     <p><a href="{% url 'manage_blood_sugar_readings' %}">Manage Blood Sugar Readings</a></p>
+    <p><a href="{% url 'view_entries' %}">View Entries</a></p>
+    
 
     <div class="container">
         <h3>Your most recent entry</h3>
@@ -29,7 +31,7 @@
                             <p class="card-text text-danger">Not Completed</p>
                             <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
                         {% else %}
-                            <p>Blood Sugar Change: {{ entry.blood_sugar_diff }}</p>
+                            <p>Blood Sugar Change: {{ entry.blood_sugar_diff }} mmol/L</p>
                             <p class="card-text text-success">Completed</p>
                         {% endif %}
                         <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>

@@ -2,38 +2,40 @@
 
 {% block content %}
 <main>
-<div class="container mt-4">
-    <a href="{% url 'create_entry' %}" class="btn btn-primary mb-4">Create Entry</a>
-    {% if entries %}
+    <div class="container mt-4">
+        <a href="{% url 'create_entry' %}" class="btn btn-primary mb-4">Create Entry</a>
+        {% if entries %}
         <div class="row">
             {% for entry in entries %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ entry.title }}</h5>
-                            <p class="card-text">{{ entry.description }}</p>
-                            <p class="card-text">Exercise: {{ entry.exercise.name }}</p>
-                            <p class="card-text">Duration: {{ entry.duration_minutes }} minutes</p>
-                            <p class="card-text">Notes: {{ entry.notes }}</p>
-                            {% if entry.before_reading %}
-                                <p class="card-text">Before Reading: {{ entry.before_reading.value }} mmol/L</p>
-                            {% endif %}
-                            {% if entry.after_reading %}
-                                <p class="card-text">After Reading: {{ entry.after_reading.value }} mmol/L</p>
-                            {% endif %}
-                            {% if not entry.completed %}
-                                <p class="card-text text-danger">Not Completed</p>
-                                <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
-                            {% endif %}
-                            <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>
-                        </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Exercise: {{ entry.exercise.name }}</h5>
+                        <p class="card-text">Duration: {{ entry.duration_minutes }} minutes</p>
+                        <p class="card-text">Notes: {{ entry.notes }}</p>
+                        {% if entry.before_reading %}
+                        <p class="card-text">Before Reading: {{ entry.before_reading.value }} mmol/L</p>
+                        {% endif %}
+                        {% if entry.after_reading %}
+                        <p class="card-text">After Reading: {{ entry.after_reading.value }} mmol/L</p>
+                        {% endif %}
+                        {% if not entry.completed %}
+                        <p class="card-text text-danger">Not Completed</p>
+                        <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
+                        {% else %}
+                        <p class="card-text">Blood Sugar Change: {{ entry.blood_sugar_diff }}</p>
+                        <p class="card-text text-success">Completed</p>
+                        {% endif %}
+                        <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>
+                        <p><a href="{% url 'delete_entry' entry.id %}" class="btn btn-danger">Delete</a></p>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
-    {% else %}
+        {% else %}
         <p>No entries available.</p>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
 </main>
 {% endblock %}
