@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost',]
+ALLOWED_HOSTS = ['*herokuapp.com','localhost',]
 
 
 # Application definition
@@ -145,6 +145,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]  # if you have a global static folder
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
