@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>Snack Name</th>
-                <th>Sugar Content (g)</th>
+                <th>Carb Content (g)</th>
                 <th>Serving Size</th>
                 {% if user.is_authenticated %}
                 <th>Actions</th>
@@ -24,7 +24,7 @@
             {% for snack in snacks %}
             <tr>
                 <td>{{ snack.name }}</td>
-                <td>{{ snack.sugar_content }}</td>
+                <td>{{ snack.carbohydrate_grams }}</td>
                 <td>{{ snack.serving_size }}</td>
                 {% if user.is_authenticated %}
                 <td>
