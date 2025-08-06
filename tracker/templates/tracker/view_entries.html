@@ -2,8 +2,8 @@
 
 {% block content %}
 <main>
-
 <div class="container mt-4">
+    <a href="{% url 'create_entry' %}" class="btn btn-primary mb-4">Create Entry</a>
     {% if entries %}
         <div class="row">
             {% for entry in entries %}
@@ -23,6 +23,7 @@
                             {% endif %}
                             {% if not entry.completed %}
                                 <p class="card-text text-danger">Not Completed</p>
+                                <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
                             {% endif %}
                             <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>
                         </div>

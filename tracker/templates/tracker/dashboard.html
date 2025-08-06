@@ -10,5 +10,35 @@
     <p><a href="{% url 'manage_exercises' %}">Manage Exercises</a></p>
     <p><a href="{% url 'manage_blood_sugar_readings' %}">Manage Blood Sugar Readings</a></p>
 
+    <div class="container">
+        <h3>Your most recent entry</h3>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ entry.exercise }}</h5>
+                        <p class="card-text">Duration: {{ entry.duration_minutes }} minutes</p>
+                        <p class="card-text">Notes: {{ entry.notes }}</p>
+                        {% if entry.before_reading %}
+                            <p class="card-text">Before Reading: {{ entry.before_reading.value }} mmol/L</p>
+                        {% endif %}
+                        {% if entry.after_reading %}
+                            <p class="card-text">After Reading: {{ entry.after_reading.value }} mmol/L</p>
+                        {% endif %}
+                        {% if not entry.completed %}
+                            <p class="card-text text-danger">Not Completed</p>
+                            <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
+                        {% else %}
+                            <p>Blood Sugar Change: {{ entry.blood_sugar_diff }}</p>
+                            <p class="card-text text-success">Completed</p>
+                        {% endif %}
+                        <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>
+                        <p class="card-text"><small class="text-muted">Created by: {{ entry.user.email }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 {% endblock %}

@@ -9,7 +9,14 @@ from .models import Exercise, BloodSugarReading, Entry
 
 @login_required
 def dashboard(request):
-    return render(request, 'tracker/dashboard.html')
+    user = request.user
+    try:
+        entry = Entry.objects.filter(user=user).latest('created_at')
+    except Entry.DoesNotExist:
+        messages.error(request, 'No entries found for the user.')
+        entry = None
+        return redirect('manage_exercises')
+    return render(request, 'tracker/dashboard.html', {'entry': entry})
 
 @login_required
 def manage_exercises(request):
