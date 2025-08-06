@@ -80,11 +80,12 @@ class CompleteEntryForm(forms.ModelForm):
 class SnackForm(forms.ModelForm):
     class Meta:
         model = Snack
-        fields = ['name', 'sugar_content', 'user', 'description']
+        fields = ['name', 'sugar_content', 'serving_size','user', 'description']
         labels = {
             'name': 'Snack Name',
             'sugar_content': 'Sugar Content (grams)',
             'description': 'Description (optional)',
+            'serving_size': 'Serving Size Grams (optional)',
             'user': ''
         }
         widgets = {

@@ -14,6 +14,7 @@
             <tr>
                 <th>Snack Name</th>
                 <th>Sugar Content (g)</th>
+                <th>Serving Size</th>
                 {% if user.is_authenticated %}
                 <th>Actions</th>
                 {% endif %}
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{ snack.name }}</td>
                 <td>{{ snack.sugar_content }}</td>
+                <td>{{ snack.serving_size }}</td>
                 {% if user.is_authenticated %}
                 <td>
                     <a href="{% url 'delete_snack' snack.id %}" class="btn btn-danger">Delete</a>
@@ -33,9 +35,9 @@
             {% empty %}
             <tr>
                 {% if user.is_authenticated %}
-                <td colspan="3">No snacks available. Please add a snack.</td>
+                <td colspan="4">No snacks available. Please add a snack.</td>
                 {% else %}
-                <td colspan="2">No snacks available.</td>
+                <td colspan="3">No snacks available.</td>
                 {% endif %}
             </tr>
             {% endfor %}

@@ -89,6 +89,7 @@ class Snack(models.Model):
         help_text="Sugar content in grams",
         default=0.00
     )
+    serving_size = models.CharField(max_length=50, blank=True, help_text="Serving size (optional)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
