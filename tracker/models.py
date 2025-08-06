@@ -78,3 +78,18 @@ class Entry(models.Model):
 
     def __str__(self):
         return f"{self.exercise.name} on {self.date} ({'Completed' if self.completed else 'In Progress'})"
+
+class Snack(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    sugar_content = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        help_text="Sugar content in grams",
+        default=0.00
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.sugar_content}g sugar"
