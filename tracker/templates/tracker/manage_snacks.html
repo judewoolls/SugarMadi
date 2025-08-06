@@ -3,16 +3,20 @@
 {% load i18n %}
 
 {% block content %}
-<main>
+<main class="container">
+
     <h1>Manage Snacks</h1>
     <p>Welcome, {{ user.email }}!</p>
     <p>Here you can view and manage your snack entries.</p>
-    <a href="{% url 'add_snack' %}" class="btn btn-success">Add Snack</a>
+    <a href="{% url 'create_snack' %}" class="btn btn-success mb-4">Add Snack</a>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Snack Name</th>
                 <th>Sugar Content (g)</th>
+                {% if user.is_authenticated %}
+                <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -20,10 +24,19 @@
             <tr>
                 <td>{{ snack.name }}</td>
                 <td>{{ snack.sugar_content }}</td>
+                {% if user.is_authenticated %}
+                <td>
+                    <a href="{% url 'delete_snack' snack.id %}" class="btn btn-danger">Delete</a>
+                </td>
+                {% endif %}
             </tr>
             {% empty %}
             <tr>
+                {% if user.is_authenticated %}
+                <td colspan="3">No snacks available. Please add a snack.</td>
+                {% else %}
                 <td colspan="2">No snacks available.</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

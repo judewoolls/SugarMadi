@@ -1,5 +1,5 @@
 from django import forms
-from .models import BloodSugarReading, Entry, Exercise
+from .models import BloodSugarReading, Entry, Exercise, Snack
 
 class ExerciseForm(forms.ModelForm):
     class Meta:
@@ -76,3 +76,19 @@ class CompleteEntryForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['before_reading'].queryset = BloodSugarReading.objects.filter(reading_type="before")
         self.fields['after_reading'].queryset = BloodSugarReading.objects.filter(reading_type="after")
+
+class SnackForm(forms.ModelForm):
+    class Meta:
+        model = Snack
+        fields = ['name', 'sugar_content', 'user', 'description']
+        labels = {
+            'name': 'Snack Name',
+            'sugar_content': 'Sugar Content (grams)',
+            'description': 'Description (optional)',
+            'user': ''
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Snack Name'}),
+            'sugar_content': forms.NumberInput(attrs={'placeholder': 'Sugar Content (grams)', 'step': '0.1'}),
+            'user': forms.HiddenInput()  # Automatically set to the logged-in user
+        }

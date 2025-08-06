@@ -1,7 +1,7 @@
 # tracker/views.py
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from .forms import ExerciseForm, BloodSugarReadingForm, EntryForm, CompleteEntryForm
+from .forms import ExerciseForm, BloodSugarReadingForm, EntryForm, CompleteEntryForm, SnackForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Exercise, BloodSugarReading, Entry, Snack
@@ -197,3 +197,29 @@ def manage_snacks(request):
     snacks = Snack.objects.filter(user=user).order_by('-created_at')
 
     return render(request, 'tracker/manage_snacks.html', {'snacks': snacks})
+
+@login_required
+def create_snack(request):
+    if request.method == 'POST':
+        form = SnackForm(request.POST)
+        if form.is_valid():
+            snack = form.save(commit=False)
+            snack.user = request.user
+            snack.save()
+            messages.success(request, 'Snack created successfully!')
+            return redirect('manage_snacks')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = SnackForm()
+    return render(request, 'tracker/create_snack.html', {'form': form})
+
+@login_required
+def delete_snack(request, snack_id):
+    try:
+        snack = Snack.objects.get(id=snack_id, user=request.user)
+        snack.delete()
+        messages.success(request, 'Snack deleted successfully!')
+    except Snack.DoesNotExist:
+        messages.error(request, 'Snack not found.')
+    return redirect('manage_snacks')
