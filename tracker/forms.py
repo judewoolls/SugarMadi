@@ -42,6 +42,14 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ['exercise', 'duration_minutes', 'notes', 'before_reading', 'after_reading', 'sugar_grams']
+        labels = {
+            'exercise': 'Exercise',
+            'duration_minutes': 'Duration (minutes)',
+            'notes': 'Notes (optional)',
+            'before_reading': 'Before Reading',
+            'after_reading': 'After Reading',
+            'sugar_grams': 'Sugar Consumed (grams, optional)'
+        }
         widgets = {
             'notes': forms.Textarea(attrs={'rows': 3}),
             'duration_minutes': forms.NumberInput(attrs={'min': 1}),
@@ -55,7 +63,14 @@ class EntryForm(forms.ModelForm):
 class CompleteEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['before_reading', 'after_reading']
+        fields = ['before_reading', 'after_reading', 'sugar_grams', 'duration_minutes', 'notes']
+        labels = {
+            'before_reading': 'Before Reading',
+            'after_reading': 'After Reading',
+            'sugar_grams': 'Sugar Consumed (grams, optional)',
+            'duration_minutes': 'Duration (minutes)',
+            'notes': 'Notes (optional)'
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

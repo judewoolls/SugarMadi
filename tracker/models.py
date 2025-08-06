@@ -51,7 +51,8 @@ class Entry(models.Model):
         decimal_places=2,
         null=True,     # allow null if user doesn't provide
         blank=True,    # allow form to be submitted without this
-        help_text="Amount of sugar consumed (grams) during this exercise session"
+        help_text="Amount of sugar consumed (grams) during this exercise session",
+        default=0.00
     )
 
     def clean(self):
