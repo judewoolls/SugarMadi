@@ -8,6 +8,7 @@ urlpatterns = [
     path('delete_exercise/<int:exercise_id>/', views.delete_exercise, name='delete_exercise'),
     path('manage_blood_sugar_readings/', views.manage_blood_sugar_readings, name='manage_blood_sugar_readings'),
     path('create_blood_sugar_reading/', views.create_blood_sugar_reading, name='create_blood_sugar_reading'),
+    path('view_entries/', views.view_entries, name='view_entries'),
     path('create_entry/', views.create_entry, name='create_entry'),
     # other urls...
 ]

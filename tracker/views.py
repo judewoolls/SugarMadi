@@ -89,6 +89,12 @@ def manage_blood_sugar_readings(request):
     return render(request, 'tracker/manage_blood_sugar_readings.html', {'readings': readings})
 
 @login_required
+def view_entries(request):
+    user = request.user
+    entries = Entry.objects.filter(user=user).order_by('-created_at')
+    return render(request, 'tracker/view_entries.html', {'entries': entries})
+
+@login_required
 def create_entry(request):
     if request.method == 'POST':
         form = EntryForm(request.POST)
@@ -103,3 +109,26 @@ def create_entry(request):
     else:
         form = EntryForm()
     return render(request, 'tracker/create_entry.html', {'form': form})
+
+@login_required
+def complete_entry(request, entry_id):
+    try:
+        entry = Entry.objects.get(id=entry_id, user=request.user)
+    except Entry.DoesNotExist:
+        messages.error(request, 'Entry not found.')
+        return redirect('dashboard')
+
+    if request.method == 'POST':
+        form = CompleteEntryForm(request.POST, instance=entry)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.user = request.user
+            entry.save()
+            messages.success(request, 'Entry completed successfully!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CompleteEntryForm(instance=entry)
+
+    return render(request, 'tracker/complete_entry.html', {'form': form, 'entry': entry})
