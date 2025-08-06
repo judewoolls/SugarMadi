@@ -46,6 +46,13 @@ class Entry(models.Model):
     notes = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    sugar_grams = models.DecimalField(
+        max_digits=6, 
+        decimal_places=2,
+        null=True,     # allow null if user doesn't provide
+        blank=True,    # allow form to be submitted without this
+        help_text="Amount of sugar consumed (grams) during this exercise session"
+    )
 
     def clean(self):
         from django.core.exceptions import ValidationError

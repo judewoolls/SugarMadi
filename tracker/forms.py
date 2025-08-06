@@ -41,7 +41,7 @@ class BloodSugarReadingForm(forms.ModelForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['exercise', 'duration_minutes', 'notes', 'before_reading', 'after_reading']
+        fields = ['exercise', 'duration_minutes', 'notes', 'before_reading', 'after_reading', 'sugar_grams']
         widgets = {
             'notes': forms.Textarea(attrs={'rows': 3}),
             'duration_minutes': forms.NumberInput(attrs={'min': 1}),
@@ -56,3 +56,8 @@ class CompleteEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ['before_reading', 'after_reading']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['before_reading'].queryset = BloodSugarReading.objects.filter(reading_type="before")
+        self.fields['after_reading'].queryset = BloodSugarReading.objects.filter(reading_type="after")
