@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from .forms import ExerciseForm, BloodSugarReadingForm, EntryForm, CompleteEntryForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Exercise, BloodSugarReading, Entry
+from .models import Exercise, BloodSugarReading, Entry, Snack
 
 
 @login_required
@@ -190,3 +190,10 @@ def delete_entry(request, entry_id):
         messages.error(request, 'Entry not found.')
     return redirect('view_entries')
 
+
+@login_required
+def manage_snacks(request):
+    user = request.user
+    snacks = Snack.objects.filter(user=user).order_by('-created_at')
+
+    return render(request, 'tracker/manage_snacks.html', {'snacks': snacks})

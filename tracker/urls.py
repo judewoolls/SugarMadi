@@ -13,5 +13,6 @@ urlpatterns = [
     path('create_entry/', views.create_entry, name='create_entry'),
     path('complete_entry/<int:entry_id>/', views.complete_entry, name='complete_entry'),
     path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+    path('manage_snacks/', views.manage_snacks, name='manage_snacks'),
     # other urls...
 ]
