@@ -13,6 +13,7 @@
     
 
     <div class="container">
+        {% if entry %}
         <h3>Your most recent entry</h3>
         <div class="row d-flex justify-content-center">
             <div class="col-md-4">
@@ -29,7 +30,9 @@
                         {% endif %}
                         {% if not entry.completed %}
                             <p class="card-text text-danger">Not Completed</p>
+                            {% if entry %}
                             <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
+                            {% endif %}
                         {% else %}
                             <p>Blood Sugar Change: {{ entry.blood_sugar_diff }} mmol/L</p>
                             <p class="card-text text-success">Completed</p>
@@ -40,6 +43,9 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <p>No recent entries found. Please create an entry to track your activities.</p>
+        {% endif %}
     </div>
 
 </main>

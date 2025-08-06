@@ -13,9 +13,8 @@ def dashboard(request):
     try:
         entry = Entry.objects.filter(user=user).latest('created_at')
     except Entry.DoesNotExist:
-        messages.error(request, 'No entries found for the user.')
         entry = None
-        return redirect('manage_exercises')
+        messages.error(request, 'No entries found for the user.')
     return render(request, 'tracker/dashboard.html', {'entry': entry})
 
 @login_required
@@ -29,7 +28,6 @@ def calc_average_blood_sugar_change(request, exercise_id):
     entries = Entry.objects.filter(user=user, completed=True, exercise=exercise).order_by('-created_at')
     if not entries:
         messages.error(request, 'No completed entries found for this exercise.')
-        return redirect('manage_exercises')
     total_change = 0
     count = 0
 
