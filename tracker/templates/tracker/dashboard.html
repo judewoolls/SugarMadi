@@ -8,6 +8,8 @@
     <h2>Welcome, {{ user.email }} 👋</h2>
     <p>This is where you’ll track activities and blood sugar.</p>
     <p><a href="{% url 'manage_exercises' %}">Manage Exercises</a></p>
+    <p><a href="{% url 'create_blood_sugar_reading' %}">Create Blood Sugar Reading</a></p>
+    <p><a href="{% url 'manage_blood_sugar_readings' %}">Manage Blood Sugar Readings</a></p>
 
 </main>
 {% endblock %}

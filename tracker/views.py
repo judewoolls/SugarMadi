@@ -1,9 +1,10 @@
 # tracker/views.py
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from .forms import ExerciseForm
+from .forms import ExerciseForm, BloodSugarReadingForm
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Exercise
+from .models import Exercise, BloodSugarReading, Entry
 
 
 @login_required
@@ -64,3 +65,25 @@ def delete_exercise(request, exercise_id):
     except Exercise.DoesNotExist:
         messages.error(request, 'Exercise not found.')
     return redirect('manage_exercises')
+
+@login_required
+def create_blood_sugar_reading(request):
+    if request.method == 'POST':
+        form = BloodSugarReadingForm(request.POST)
+        if form.is_valid():
+            reading = form.save(commit=False)
+            reading.user = request.user
+            reading.save()
+            messages.success(request, 'Blood sugar reading created successfully!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = BloodSugarReadingForm()
+    return render(request, 'tracker/create_blood_sugar_reading.html', {'form': form})
+
+@login_required
+def manage_blood_sugar_readings(request):
+    user = request.user
+    readings = BloodSugarReading.objects.filter(user=user).order_by('-timestamp')
+    return render(request, 'tracker/manage_blood_sugar_readings.html', {'readings': readings})

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="d-flex flex-column align-items-center">
+    <h1>Manage Blood Sugar Readings</h1>
+    <p>Here you can view and manage your blood sugar readings.</p>
+    <a href="{% url 'create_blood_sugar_reading' %}" class="btn btn-success">Create New Reading</a>
+    {% if readings %}
+        <p class="mt-3">You have {{ readings|length }} blood sugar readings.</p>
+    {% else %}
+        <p class="mt-3">No blood sugar readings found. Please create one.</p>
+    {% endif %}
+    {% if readings %}
+        <table class="table mt-3" style="width: 95%;">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Reading (mg/dL)</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reading in readings %}
+                    <tr>
+                        <td>{{ reading.date }} @ {{ reading.timestamp }}</td>
+                        <td>{{ reading.reading_type }}</td>
+                        <td>{{ reading.value }}</td>
+                        <td>
+                             <p>button goes here</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</main>
+{% endblock %}

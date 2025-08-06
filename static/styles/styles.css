@@ -57,3 +57,8 @@ main {
     background-color: #218838;
     box-shadow: #218838 0px 0px 10px;
 }
+
+
+.card {
+    border: 1px #333 solid;
+}
