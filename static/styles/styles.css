@@ -27,3 +27,33 @@ nav li {
 main {
     text-align: center;
 }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+}
+.form-group input, .form-group select, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.btn {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #218838;
+    box-shadow: #218838 0px 0px 10px;
+}
