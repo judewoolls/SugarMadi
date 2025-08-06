@@ -29,7 +29,7 @@
                         <td>{{ reading.reading_type }}</td>
                         <td>{{ reading.value }}</td>
                         <td>
-                             <p>button goes here</p>
+                            <a href="{% url 'delete_blood_sugar_reading' reading.id %}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

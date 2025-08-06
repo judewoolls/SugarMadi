@@ -23,7 +23,7 @@
                         <p class="card-text text-danger">Not Completed</p>
                         <a href="{% url 'complete_entry' entry.id %}" class="btn btn-success">Complete Entry</a>
                         {% else %}
-                        <p class="card-text">Blood Sugar Change: {{ entry.blood_sugar_diff }}</p>
+                        <p class="card-text">Blood Sugar Change: {{ entry.blood_sugar_diff }} mmol/L</p>
                         <p class="card-text text-success">Completed</p>
                         {% endif %}
                         <p class="card-text"><small class="text-muted">Created on {{ entry.created_at }}</small></p>

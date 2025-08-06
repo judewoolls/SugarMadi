@@ -39,15 +39,19 @@ def calc_average_blood_sugar_change(request, exercise_id):
             if change is not None:
                 total_change += change
                 count += 1
-    return total_change / count if count > 0 else 0
+    return total_change / count if count > 0 else 0, count
 
 
 @login_required
 def manage_exercises(request):
     user = request.user
     exercises = Exercise.objects.filter(user=user)
+
     for exercise in exercises:
-        exercise.average_change = calc_average_blood_sugar_change(request, exercise.id)
+        average_change, entry_count = calc_average_blood_sugar_change(request, exercise.id)
+        exercise.average_change = average_change
+        exercise.entry_count = entry_count
+
     return render(request, 'tracker/manage_exercises.html', {'exercises': exercises})
 
 @login_required
@@ -120,6 +124,16 @@ def manage_blood_sugar_readings(request):
     user = request.user
     readings = BloodSugarReading.objects.filter(user=user).order_by('-timestamp')
     return render(request, 'tracker/manage_blood_sugar_readings.html', {'readings': readings})
+
+@login_required
+def delete_blood_sugar_reading(request, reading_id):
+    try:
+        reading = BloodSugarReading.objects.get(id=reading_id, user=request.user)
+        reading.delete()
+        messages.success(request, 'Blood sugar reading deleted successfully!')
+    except BloodSugarReading.DoesNotExist:
+        messages.error(request, 'Blood sugar reading not found.')
+    return redirect('manage_blood_sugar_readings')
 
 @login_required
 def view_entries(request):

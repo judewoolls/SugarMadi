@@ -30,6 +30,13 @@
                                     No data available
                                 {% endif %}
                             </p>
+                            <p class="card-text">
+                                {% if exercise.entry_count %}
+                                Exercise has been performed: <strong>{{ exercise.entry_count }}</strong> times.
+                                {% else %}
+                                Exercise has not been performed yet.
+                                {% endif %}
+                            </p>
                             
                             <a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-primary">Edit</a>
                             <a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-danger">Delete</a>
